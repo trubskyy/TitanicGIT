@@ -11,3 +11,5 @@ class <- factor(titanic[,"Pclass"])
 linear <- lm(data=titanic, Survived ~ Pclass + Sex)
 
 new line 
+
+library \\\
