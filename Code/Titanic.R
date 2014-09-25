@@ -1,6 +1,6 @@
 
 library("ggplot2")
-setwd("C:/Users/mykha_000/SkyDrive/Kaggle/Titanic")
+setwd("C://Users//mykha_000//SkyDrive//Kaggle//TitanicGIT")
 
 data.dir <- ".//Data"
 
@@ -10,6 +10,3 @@ class <- factor(titanic[,"Pclass"])
 
 linear <- lm(data=titanic, Survived ~ Pclass + Sex)
 
-new line 
-
-library \\\
