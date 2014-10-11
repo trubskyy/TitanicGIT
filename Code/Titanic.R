@@ -1,5 +1,6 @@
 
 library("ggplot2")
+
 setwd("C://Users//mykha_000//SkyDrive//Kaggle//TitanicGIT")
 
 data.dir <- ".//Data"
@@ -20,13 +21,12 @@ titanic[,"n_of_cabins"] <- {
                                & countSpaces(titanic[,"Cabin"]) > 0) * 
                               (countSpaces(titanic[,"Cabin"]) + 1)  )
                             }
-titanic[(
-        titanic[,"Cabin"] != "" 
-        & titanic[,"n_of_cabins"] == 0)
-        , "n_of_cabins"
-        ] <- 1 
 
+titanic[,"title"] <- sapply(titanic$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
+titanic$title <- sub(' ', '', titanic$title)
 
+library(car)
+scatterplot.matrix( ~ Survived + Age + Pclass | Sex, data=titanic)
 
-linear <- lm(data=titanic, Survived ~ Pclass + Sex)
+linear <- lm(data=titanic, Survived ~ Pclass + Sex+n_of_cabins)
 
