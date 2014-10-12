@@ -22,8 +22,36 @@ titanic[,"n_of_cabins"] <- {
                               (countSpaces(titanic[,"Cabin"]) + 1)  )
                             }
 
-titanic[,"title"] <- sapply(titanic$Name, FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]})
+titanic[,"title"] <- sapply(titanic$Name
+                            , FUN=function(x) {strsplit(x, split='[,.]')[[1]][2]}
+                            )
+
 titanic$title <- sub(' ', '', titanic$title)
+
+titanic[
+        which(titanic[,"title"] %in% c("Capt"
+                                       ,"Col"
+                                       ,"Don"
+                                       ,"Dr"
+                                       ,"Jonkheer"
+                                       ,"Major"
+                                       ,"Master"
+                                       ,"Rev"
+                                       ,"Sir"
+                                       )
+              )
+        , "title"] <- "sMr"
+
+titanic[
+  which(titanic[,"title"] %in% c("Lady"
+                                 ,"Mlle"
+                                 ,"Mme"
+                                 ,"Ms"
+                                 ,"the Countess"
+                                )
+  )
+  , "title"] <- "sMs"
+
 
 library(car)
 scatterplot.matrix( ~ Survived + Age + Pclass | Sex, data=titanic)
