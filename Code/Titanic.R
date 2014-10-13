@@ -1,5 +1,6 @@
-
 library("ggplot2")
+library("ggvis")
+
 
 setwd("C://Users//mykha_000//SkyDrive//Kaggle//TitanicGIT")
 
@@ -53,8 +54,14 @@ titanic[
   , "title"] <- "sMs"
 
 
-library(car)
-scatterplot.matrix( ~ Survived + Age + Pclass | Sex, data=titanic)
+titanic[,"age.bins"] <- cut(titanic[,"Age"]
+                            , breaks = c(10,20,30,40,50,60,100)
+                            , include.lowest = TRUE
+                            , na.action = na.fail
+                            )
+
+
+p <- ggvis(titanic,x=~Age,y=~Survived,size := input_slider(1,100))
 
 linear <- lm(data=titanic, Survived ~ Pclass + Sex+n_of_cabins)
 
