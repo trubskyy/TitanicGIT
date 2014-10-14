@@ -53,15 +53,24 @@ titanic[
   )
   , "title"] <- "sMs"
 
+titanic[is.na(titanic[,"Age"])
+		,"Age"] <- -99
 
 titanic[,"age.bins"] <- cut(titanic[,"Age"]
-                            , breaks = c(10,20,30,40,50,60,100)
+                            , breaks = c(-100,0,10,20,30,40,50,60,100)
                             , include.lowest = TRUE
                             , na.action = na.fail
                             )
 
+titanic[,"fare.bins"] <- cut(titanic[,"Fare"]
+							 , breaks = c(0,10,20,40,100, max(titanic[,"Fare"]))
+							 , include.lowest = TRUE)
 
-p <- ggvis(titanic,x=~Age,y=~Survived,size := input_slider(1,100))
+char.ix <- grep("[A-Z a-z]",titanic[,"Ticket"],perl=TRUE)
+
+titanic[char.ix ,"char.ticket"] <- 1
+titanic[-char.ix,"char.ticket"] <- 0
+
 
 linear <- lm(data=titanic, Survived ~ Pclass + Sex+n_of_cabins)
 
